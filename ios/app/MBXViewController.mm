@@ -186,7 +186,7 @@ mbgl::Settings_NSUserDefaults *settings = nullptr;
 
         if ([features isKindOfClass:[NSDictionary class]])
         {
-            NSMutableArray *annotations = [NSMutableArray array];
+            NSMutableArray <MBXAnnotation *> *annotations = [NSMutableArray array];
 
             for (NSDictionary *feature in features[@"features"])
             {

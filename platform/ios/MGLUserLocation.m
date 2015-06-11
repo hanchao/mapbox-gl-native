@@ -30,7 +30,7 @@ NS_ASSUME_NONNULL_END
     return ! [key isEqualToString:@"location"] && ! [key isEqualToString:@"heading"];
 }
 
-+ (NSSet *)keyPathsForValuesAffectingCoordinate
++ (NSSet <NSString *> *)keyPathsForValuesAffectingCoordinate
 {
     return [NSSet setWithObject:@"location"];
 }
