@@ -168,7 +168,7 @@ IB_DESIGNABLE
 @property (nonatomic, nullable) NSString *mapID __attribute__((unavailable("Use styleID.")));
 
 /** Returns the URLs to the styles bundled with the library. */
-@property (nonatomic, readonly) NSArray <NSURL *> *bundledStyleURLs;
+@property (nonatomic, readonly) MGL_COLLECTION(NSArray, NSURL *) *bundledStyleURLs;
 
 /** URL of the style currently displayed in the receiver.
 *
@@ -178,7 +178,7 @@ IB_DESIGNABLE
 @property (nonatomic, null_resettable) NSURL *styleURL;
 
 /** Currently active style classes, represented as an array of string identifiers. */
-@property (nonatomic) NSArray <NSString *> *styleClasses;
+@property (nonatomic) MGL_COLLECTION(NSArray, NSString *) *styleClasses;
 
 /** Returns a Boolean value indicating whether the style class with the given identifier is currently active.
     @param styleClass The style class to query for.
@@ -200,7 +200,7 @@ IB_DESIGNABLE
 /** The complete list of annotations associated with the receiver. (read-only)
 *
 *   The objects in this array must adopt the MGLAnnotation protocol. If no annotations are associated with the map view, the value of this property is `nil`. */
-@property (nonatomic, readonly, nullable) NSArray <id <MGLAnnotation>> *annotations;
+@property (nonatomic, readonly, nullable) MGL_COLLECTION(NSArray, id <MGLAnnotation>) *annotations;
 
 /** Adds the specified annotation to the map view.
 *   @param annotation The annotation object to add to the receiver. This object must conform to the MGLAnnotation protocol. The map view retains the specified object. */
@@ -208,7 +208,7 @@ IB_DESIGNABLE
 
 /** Adds an array of annotation objects to the map view.
 *   @param annotations An array of annotation objects. Each object in the array must conform to the MGLAnnotation protocol. The map view retains the individual annotation objects. */
-- (void)addAnnotations:(NSArray <id <MGLAnnotation>> *)annotations;
+- (void)addAnnotations:(MGL_COLLECTION(NSArray, id <MGLAnnotation>) *)annotations;
 
 /** Removes the specified annotation object from the map view.
 *
@@ -222,12 +222,12 @@ IB_DESIGNABLE
 *   Removing annotation objects disassociates them from the map view entirely, preventing them from being displayed on the map. Thus, you would typically call this method only when you want to hide or delete the specified annotations.
 *
 *   @param annotations The array of annotations to remove. Objects in the array must conform to the MGLAnnotation protocol. */
-- (void)removeAnnotations:(NSArray <id <MGLAnnotation>> *)annotations;
+- (void)removeAnnotations:(MGL_COLLECTION(NSArray, id <MGLAnnotation>) *)annotations;
 
 /** The annotations that are currently selected.
 *
 *   Assigning a new array to this property selects only the first annotation in the array. */
-@property (nonatomic, copy) NSArray <id <MGLAnnotation>> *selectedAnnotations;
+@property (nonatomic, copy) MGL_COLLECTION(NSArray, id <MGLAnnotation>) *selectedAnnotations;
 
 /** Selects the specified annotation and displays a callout view for it.
 *

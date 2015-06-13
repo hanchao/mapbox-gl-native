@@ -165,7 +165,7 @@ const NSTimeInterval MGLFlushInterval = 60;
 // This is an array of events to push. All access to it will be
 // from our own serial queue.
 //
-@property (nonatomic) NSMutableArray <MGLMapboxEventAttributes *> *eventQueue;
+@property (nonatomic) MGL_COLLECTION(NSMutableArray, MGLMapboxEventAttributes *) *eventQueue;
 
 // This is a custom serial queue for accessing the event queue.
 //
@@ -579,7 +579,7 @@ const NSTimeInterval MGLFlushInterval = 60;
 // Can be called from any thread. Called implicitly from public
 // use of +flush. Posts an async network request to upload metrics.
 //
-- (void) postEvents:(NSArray <MGLMapboxEventAttributes *> *)events {
+- (void) postEvents:(MGL_COLLECTION(NSArray, MGLMapboxEventAttributes *) *)events {
     __weak MGLMapboxEvents *weakSelf = self;
 
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{

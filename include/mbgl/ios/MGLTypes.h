@@ -16,3 +16,13 @@ typedef NS_ENUM(NSUInteger, MGLUserTrackingMode)
 };
 
 NS_ASSUME_NONNULL_END
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wvariadic-macros"
+    #if __has_feature(objc_generics)
+        /** Inserts a type specifier for a pointer to a lightweight generic with the given collection and object classes. Use a `*` for any non-`id` object classes but no `*` for the collection class. */
+        #define MGL_COLLECTION(CollectionClass, ObjectClass...) CollectionClass <ObjectClass>
+    #else
+        #define MGL_COLLECTION(CollectionClass, ObjectClass...) CollectionClass
+    #endif
+#pragma clang diagnostic pop

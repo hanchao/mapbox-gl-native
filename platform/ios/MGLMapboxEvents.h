@@ -31,8 +31,8 @@ extern NSString *const MGLEventGesturePanStart;
 extern NSString *const MGLEventGesturePinchStart;
 extern NSString *const MGLEventGestureRotateStart;
 
-typedef NSDictionary <NSString *, id> MGLMapboxEventAttributes;
-typedef NSMutableDictionary <NSString *, id> MGLMutableMapboxEventAttributes;
+typedef MGL_COLLECTION(NSDictionary, NSString *, id) MGLMapboxEventAttributes;
+typedef MGL_COLLECTION(NSMutableDictionary, NSString *, id) MGLMutableMapboxEventAttributes;
 
 @interface MGLMapboxEvents : NSObject <NSURLSessionDelegate>
 

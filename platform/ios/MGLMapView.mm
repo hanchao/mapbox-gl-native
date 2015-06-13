@@ -97,7 +97,7 @@ CLLocationDegrees MGLDegreesFromRadians(CGFloat radians)
     MBGLView *_mbglView;
     mbgl::DefaultFileSource *_mbglFileSource;
     
-    NSMutableArray <NSURL *> *_bundledStyleURLs;
+    MGL_COLLECTION(NSMutableArray, NSURL *) *_bundledStyleURLs;
 
     BOOL _isTargetingInterfaceBuilder;
     CLLocationDegrees _pendingLatitude;
@@ -154,7 +154,7 @@ std::chrono::steady_clock::duration secondsAsDuration(float duration)
     NSAssert(NO, @"-[MGLMapView setAccessToken:] has been replaced by +[MGLAccountManager setAccessToken:].\n\nIf you previously set this access token in a storyboard inspectable, select the MGLMapView in Interface Builder and delete the “accessToken” entry from the User Defined Runtime Attributes section of the Identity inspector. Then go to the Info.plist file and set MGLMapboxAccessToken to “%@”.", accessToken);
 }
 
-+ (NSSet <NSString *> *)keyPathsForValuesAffectingStyleURL
++ (MGL_COLLECTION(NSSet, NSString *) *)keyPathsForValuesAffectingStyleURL
 {
     return [NSSet setWithObject:@"styleID"];
 }
@@ -728,7 +728,7 @@ std::chrono::steady_clock::duration secondsAsDuration(float duration)
     if (self.userTrackingMode == MGLUserTrackingModeFollowWithHeading) self.userTrackingMode = MGLUserTrackingModeFollow;
 }
 
-- (void)touchesBegan:(__unused NSSet <UITouch *> *)touches withEvent:(__unused UIEvent *)event
+- (void)touchesBegan:(__unused MGL_COLLECTION(NSSet, UITouch *) *)touches withEvent:(__unused UIEvent *)event
 {
     _mbglMap->cancelTransitions();
     _mbglMap->setGestureInProgress(false);
@@ -1294,17 +1294,17 @@ std::chrono::steady_clock::duration secondsAsDuration(float duration)
     }
 }
 
-+ (NSSet <NSString *> *)keyPathsForValuesAffectingZoomEnabled
++ (MGL_COLLECTION(NSSet, NSString *) *)keyPathsForValuesAffectingZoomEnabled
 {
     return [NSSet setWithObject:@"allowsZooming"];
 }
 
-+ (NSSet <NSString *> *)keyPathsForValuesAffectingScrollEnabled
++ (MGL_COLLECTION(NSSet, NSString *) *)keyPathsForValuesAffectingScrollEnabled
 {
     return [NSSet setWithObject:@"allowsScrolling"];
 }
 
-+ (NSSet <NSString *> *)keyPathsForValuesAffectingRotateEnabled
++ (MGL_COLLECTION(NSSet, NSString *) *)keyPathsForValuesAffectingRotateEnabled
 {
     return [NSSet setWithObject:@"allowsRotating"];
 }
@@ -1365,7 +1365,7 @@ std::chrono::steady_clock::duration secondsAsDuration(float duration)
 
 #pragma mark - Geography -
 
-+ (NSSet <NSString *> *)keyPathsForValuesAffectingCenterCoordinate
++ (MGL_COLLECTION(NSSet, NSString *) *)keyPathsForValuesAffectingCenterCoordinate
 {
     return [NSSet setWithObjects:@"latitude", @"longitude", nil];
 }
@@ -1535,7 +1535,7 @@ CLLocationCoordinate2D MGLLocationCoordinate2DFromLatLng(mbgl::LatLng latLng)
 
 #pragma mark - Styling -
 
-- (NSArray <NSURL *> *)bundledStyleURLs
+- (MGL_COLLECTION(NSArray, NSURL *) *)bundledStyleURLs
 {
     if ( ! _bundledStyleURLs)
     {
@@ -1553,7 +1553,7 @@ CLLocationCoordinate2D MGLLocationCoordinate2DFromLatLng(mbgl::LatLng latLng)
     return [NSArray arrayWithArray:_bundledStyleURLs];
 }
 
-+ (NSSet <NSString *> *)keyPathsForValuesAffectingStyleID
++ (MGL_COLLECTION(NSSet, NSString *) *)keyPathsForValuesAffectingStyleID
 {
     return [NSSet setWithObject:@"styleURL"];
 }
@@ -1580,9 +1580,9 @@ CLLocationCoordinate2D MGLLocationCoordinate2DFromLatLng(mbgl::LatLng latLng)
     NSAssert(NO, @"-[MGLMapView setMapID:] has been renamed -[MGLMapView setStyleID:].\n\nIf you previously set this map ID in a storyboard inspectable, select the MGLMapView in Interface Builder and delete the “mapID” entry from the User Defined Runtime Attributes section of the Identity inspector. Then go to the Attributes inspector and enter “%@” into the “Style ID” field.", mapID);
 }
 
-- (NSArray <NSString *> *)styleClasses
+- (MGL_COLLECTION(NSArray, NSString *) *)styleClasses
 {
-    NSMutableArray <NSString *> *returnArray = [NSMutableArray array];
+    NSMutableArray *returnArray = [NSMutableArray array];
 
     const std::vector<std::string> &appliedClasses = _mbglMap->getClasses();
 
@@ -1594,12 +1594,12 @@ CLLocationCoordinate2D MGLLocationCoordinate2DFromLatLng(mbgl::LatLng latLng)
     return returnArray;
 }
 
-- (void)setStyleClasses:(NSArray <NSString *> *)appliedClasses
+- (void)setStyleClasses:(MGL_COLLECTION(NSArray, NSString *) *)appliedClasses
 {
     [self setStyleClasses:appliedClasses transitionDuration:0];
 }
 
-- (void)setStyleClasses:(NSArray <NSString *> *)appliedClasses transitionDuration:(NSTimeInterval)transitionDuration
+- (void)setStyleClasses:(MGL_COLLECTION(NSArray, NSString *) *)appliedClasses transitionDuration:(NSTimeInterval)transitionDuration
 {
     std::vector<std::string> newAppliedClasses;
 
@@ -1635,11 +1635,11 @@ CLLocationCoordinate2D MGLLocationCoordinate2DFromLatLng(mbgl::LatLng latLng)
 
 #pragma mark - Annotations -
 
-- (nullable NSArray <id <MGLAnnotation>> *)annotations
+- (nullable MGL_COLLECTION(NSArray, id <MGLAnnotation>) *)annotations
 {
     if ([_annotationIDsByAnnotation count])
     {
-        NSMutableArray <id <MGLAnnotation>> *result = [NSMutableArray array];
+        NSMutableArray *result = [NSMutableArray array];
 
         NSEnumerator *keyEnumerator = [_annotationIDsByAnnotation keyEnumerator];
         id <MGLAnnotation> annotation;
@@ -1665,7 +1665,7 @@ CLLocationCoordinate2D MGLLocationCoordinate2DFromLatLng(mbgl::LatLng latLng)
     [self addAnnotations:@[ annotation ]];
 }
 
-- (void)addAnnotations:(NSArray <id <MGLAnnotation>> *)annotations
+- (void)addAnnotations:(MGL_COLLECTION(NSArray, id <MGLAnnotation>) *)annotations
 {
     if ( ! annotations) return;
 
@@ -1713,7 +1713,7 @@ CLLocationCoordinate2D MGLLocationCoordinate2DFromLatLng(mbgl::LatLng latLng)
     [self removeAnnotations:@[ annotation ]];
 }
 
-- (void)removeAnnotations:(NSArray <id <MGLAnnotation>> *)annotations
+- (void)removeAnnotations:(MGL_COLLECTION(NSArray, id <MGLAnnotation>) *)annotations
 {
     if ( ! annotations) return;
 
@@ -1737,12 +1737,12 @@ CLLocationCoordinate2D MGLLocationCoordinate2DFromLatLng(mbgl::LatLng latLng)
     _mbglMap->removeAnnotations(annotationIDsToRemove);
 }
 
-- (NSArray <id <MGLAnnotation>> *)selectedAnnotations
+- (MGL_COLLECTION(NSArray, id <MGLAnnotation>) *)selectedAnnotations
 {
     return (self.selectedAnnotation ? @[ self.selectedAnnotation ] : @[]);
 }
 
-- (void)setSelectedAnnotations:(NSArray <id <MGLAnnotation>> *)selectedAnnotations
+- (void)setSelectedAnnotations:(MGL_COLLECTION(NSArray, id <MGLAnnotation>) *)selectedAnnotations
 {
     if ( ! selectedAnnotations.count) return;
 
@@ -1939,7 +1939,7 @@ CLLocationCoordinate2D MGLLocationCoordinate2DFromLatLng(mbgl::LatLng latLng)
     }
 }
 
-+ (NSSet <NSString *> *)keyPathsForValuesAffectingUserLocation
++ (MGL_COLLECTION(NSSet, NSString *) *)keyPathsForValuesAffectingUserLocation
 {
     return [NSSet setWithObject:@"userLocationAnnotationView"];
 }
@@ -2633,7 +2633,7 @@ class MBGLView : public mbgl::View
 
 @implementation MGLMapView (IBAdditions)
 
-+ (NSSet <NSString *> *)keyPathsForValuesAffectingLatitude
++ (MGL_COLLECTION(NSSet, NSString *) *)keyPathsForValuesAffectingLatitude
 {
     return [NSSet setWithObject:@"centerCoordinate"];
 }
@@ -2659,7 +2659,7 @@ class MBGLView : public mbgl::View
     }
 }
 
-+ (NSSet <NSString *> *)keyPathsForValuesAffectingLongitude
++ (MGL_COLLECTION(NSSet, NSString *) *)keyPathsForValuesAffectingLongitude
 {
     return [NSSet setWithObject:@"centerCoordinate"];
 }
@@ -2685,7 +2685,7 @@ class MBGLView : public mbgl::View
     }
 }
 
-+ (NSSet <NSString *> *)keyPathsForValuesAffectingAllowsZooming
++ (MGL_COLLECTION(NSSet, NSString *) *)keyPathsForValuesAffectingAllowsZooming
 {
     return [NSSet setWithObject:@"zoomEnabled"];
 }
@@ -2700,7 +2700,7 @@ class MBGLView : public mbgl::View
     self.zoomEnabled = allowsZooming;
 }
 
-+ (NSSet <NSString *> *)keyPathsForValuesAffectingAllowsScrolling
++ (MGL_COLLECTION(NSSet, NSString *) *)keyPathsForValuesAffectingAllowsScrolling
 {
     return [NSSet setWithObject:@"scrollEnabled"];
 }
@@ -2715,7 +2715,7 @@ class MBGLView : public mbgl::View
     self.scrollEnabled = allowsScrolling;
 }
 
-+ (NSSet <NSString *> *)keyPathsForValuesAffectingAllowsRotating
++ (MGL_COLLECTION(NSSet, NSString *) *)keyPathsForValuesAffectingAllowsRotating
 {
     return [NSSet setWithObject:@"rotateEnabled"];
 }
